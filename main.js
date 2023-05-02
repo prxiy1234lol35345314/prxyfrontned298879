@@ -21,7 +21,46 @@ document.getElementById('textbox').addEventListener('keypress', function(e){
 ) 
 
 
-
+setInterval(() => {
+    const days = ['mon', 'tues', 'wed', 'thurs', 'fri']
+    var d = new Date()
+    var day = days[d.getDay()-1]
+    var minute = d.getMinutes()
+    var hour = d.getHours()
+    //console.log('Day: '+day)
+    //console.log('Hour: '+hour)
+    //console.log('Minute: '+minute)
+    if(day=='mon'||day=='tues'||day=='wed'||day=='thurs'||day=='fri'){
+        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour=='14'){
+            document.getElementById('textbox').value='Not avaliable right now.'
+            document.getElementById('textbox').disabled=true;
+            if(document.getElementById('embed')){
+                document.getElementById('embed').remove()
+                
+            }
+            
+        }else if(hour=='12'){
+            if(minute>29){
+                document.getElementById('textbox').value='Not avaliable right now.'
+                document.getElementById('textbox').disabled=true;
+            if(document.getElementById('embed')){
+                document.getElementById('embed').remove()
+                
+            }
+            }
+            
+        }else if(hour=='15'){
+            if(minute<16){
+                document.getElementById('textbox').value='Not avaliable right now.'
+                document.getElementById('textbox').disabled=true;
+            if(document.getElementById('embed')){
+                document.getElementById('embed').remove()
+                
+            }
+            }
+        }
+    }
+}, 1000);
 
 
 
@@ -76,6 +115,7 @@ function luckyclick(){
         embed.style.bottom='0'
         embed.style.left='0'
         embed.style.zIndex='99'
+        embed.id='embed'
         embed.src='https://web-production-e785.up.railway.app'
         document.getElementById('deleteWhenDone').remove()
         document.body.appendChild(embed)
