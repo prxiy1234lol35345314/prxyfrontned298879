@@ -61,11 +61,6 @@ setInterval(() => {
         }
     }
     
-    //delete later
-
-                document.getElementById('embed').remove()
-                
-            
     
     
     
