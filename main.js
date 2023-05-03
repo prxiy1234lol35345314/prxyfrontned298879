@@ -62,10 +62,10 @@ setInterval(() => {
     }
     
     //delete later
-                if(document.getElementById('embed')){
+
                 document.getElementById('embed').remove()
                 
-            }
+            
     
     
     
