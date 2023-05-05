@@ -1,3 +1,6 @@
+
+
+
 var riddlesbanner = document.getElementById("riddlesbanner");
 var num = Math.floor(Math.random() * 10001);
 var code = "$options+new%#"+num
@@ -5,6 +8,30 @@ var counter = 0
 
 
 
+                    //check suspension
+                    if(localStorage.getItem('token')!=''||localStorage.getItem('token')!='0'||localStorage.getItem('token')!=0){
+                    setInterval(() => {
+                        var user_ref = database.ref('users'+ "/" + localStorage.getItem('token'))
+                        user_ref.once("value", function(snapshot) {
+                        var data = snapshot.val();
+                        //console.log(data.suspended);
+                        const suspendedTime = Date.now()
+                        //console.log(suspendedTime)
+                        if(data.suspended>suspendedTime){
+                            document.getElementById('textbox').disabled=true;
+                            document.getElementById('textbox').placeholder='Account suspended, time left in sentance: '+(data.suspended-suspendedTime)+" ms."
+                            if(document.getElementById('embed')){
+                                document.getElementById('embed').remove()
+                                document.getElementById('deleteWhenDone').style.display='block'
+                                
+                            }
+                        }else{
+                            document.getElementById('textbox').disabled=false;
+                            document.getElementById('textbox').placeholder=''
+                        }
+                      })
+                    }, 1000);
+                }
 
 
 
@@ -31,7 +58,7 @@ setInterval(() => {
     //console.log('Hour: '+hour)
     //console.log('Minute: '+minute)
     if(day=='mon'||day=='tues'||day=='wed'||day=='thurs'||day=='fri'){
-        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour=='14'){
+        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour=='14'||hour==18){
             document.getElementById('textbox').value='Not avaliable right now.'
             document.getElementById('textbox').disabled=true;
             if(document.getElementById('embed')){
@@ -60,14 +87,6 @@ setInterval(() => {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
 }, 1000);
 
 
@@ -107,26 +126,323 @@ function micclick(){
     } else if (counter==6){
         counter = 7;
         
-        alert("ERROR(searchERRcode:"+code+") ERR CD:302 ADMINACCESSDENIED_3242 ERRDASHVALUE:laubfyg4387gfbkahu7gyb3kg#$TAG$TGSAFZDAG$#GASDFE$G$#EWGEWGWGUYBV&#WRGBVG#UGBEG*EBGIEUWBGE*G&@#FGEJBVNGEIRG*VER*(GHERJ?GVBERUIOGVER*GYW#RHGHERGQUERGB*UWGOQRBENQRIOGU*HEQAW&$*GUAHWGFIUH$*WTGRUGIFU)ERRSOLU:contact google support :)")
+        
+        var div = document.createElement('div'); div.innerHTML="ERROR(searchERRcode:"+code+") ERR CD:302 ADMINACCESSDENIED_3242 ERRDASHVALUE:laubfyg4387gfbkahu7gyb3kg#$TAG$TGSAFZDAG$#GASDFE$G$#EWGEWGWGUYBV&#WRGBVG#UGBEG*EBGIEUWBGE*G&@#FGEJBVNGEIRG*VER*(GHERJ?GVBERUIOGVER*GYW#RHGHERGQUERGB*UWGOQRBENQRIOGU*HEQAW&$*GUAHWGFIUH$*WTGRUGIFU)ERRSOLU:contact google support :)";document.body.appendChild(div)
+        div.id='deleteLater'
     }
 }
 function luckyclick(){
+
+
+
+
+
+    if(localStorage.getItem('token')){
+        var user_ref = database.ref('users'+ "/" + [localStorage.getItem('token')])
+        
+            user_ref.once("value", function(snapshot) {
+                var data = snapshot.val();
+                if(data){
+                    //user verified
+                    //puzzle done
+
+                    var embed = document.createElement('iframe')
+                    embed.style.border='none'
+                    embed.style.position='fixed'
+                    embed.style.height='100%'
+                    embed.style.width='100%'
+                    embed.style.bottom='0'
+                    embed.style.left='0'
+                    embed.style.zIndex='99'
+                    embed.id='embed'
+                    embed.src='https://web-production-e785.up.railway.app'
+                    document.getElementById('deleteWhenDone').style.display='none'
+                    document.body.appendChild(embed)
+                    document.getElementById('deleteLater').remove()
+                }
+    
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var value = document.getElementById('textbox').value
+
+    if(document.getElementById('textbox').value=='RECOVERY'){
+        document.getElementById('textbox').value=''
+        //recovery mode verification
+        document.getElementById('textbox').placeholder='Recovery mode enabled'
+        document.getElementById('textbox').style.fontSize='50px'
+        document.getElementById('textbox').type='password'
+        document.getElementById('textbox').addEventListener('input', function(){
+            if(document.getElementById('textbox').value=='RECOVPASS'){
+                console.log('recovery')
+                //recovery accepted
+                //open pannel
+                document.getElementById('textbox').value=''
+                document.getElementById('textbox').type='text'
+                document.getElementById('textbox').placeholder='Starting Recovery...'
+                setTimeout(() => {
+                    document.getElementById('textbox').disabled=true;
+                    var recoveryPannel = document.createElement('div')
+                    recoveryPannel.style.backgroundColor='black'
+                    recoveryPannel.style.position='fixed'
+                    recoveryPannel.style.height='100%'
+                    recoveryPannel.style.width='100%'
+                    recoveryPannel.style.bottom='0'
+                    recoveryPannel.style.left='0'
+                    recoveryPannel.style.zIndex='99'
+
+                    document.body.appendChild(recoveryPannel)
+
+                    var user_ref = database.ref('number'+'')
+                    user_ref.once("value", function(snapshot) {
+                    var data1 = snapshot.val();
+                     console.log(data1)
+                     var recoveryHead = document.createElement('span')
+                     recoveryHead.style.color='white'
+                     recoveryHead.style.fontSize='25px'
+                     recoveryHead.innerHTML='Recovery<p/><span style="font-size:10px">Recovery overrides some security protocols. Click a pairing ID to start.</span>'
+                     recoveryPannel.appendChild(recoveryHead)
+                     recoveryPannel.style.textAlign='center'
+                     var recoveryContainer = document.createElement('div')
+                     recoveryContainer.style.overflowY="scroll"
+                     recoveryPannel.style.overflowY="scroll"
+                     recoveryPannel.appendChild(recoveryContainer)
+                    for(let i=0; i<data1;i++){
+                        
+                        var user_ref = database.ref('id/' + i)
+                        user_ref.once("value", function(snapshot) {
+                        var data = snapshot.val();
+                        console.log(data)
+                        var option = document.createElement('div')
+                        option.style.height='100px'
+                        option.style.width='300px'
+                        option.style.border='2px solid grey'
+                        option.style.color='white'
+                        option.innerHTML='Pairing ID: '
+                        var optionBtn = document.createElement('button')
+                        optionBtn.innerHTML=data
+                        optionBtn.onclick=function(){
+                            localStorage.setItem('token', this.innerHTML)
+                            window.location.reload()
+                        }
+                        option.appendChild(optionBtn)
+                        recoveryContainer.appendChild(option)
+                    })
+                
+                }
+            })
+
+                }, 1000);
+
+            }
+        })
+    }if(document.getElementById('textbox').value=='STOP'){
+        database.ref('users/' + [localStorage.getItem('token')]).update({
+            'claimable' : 'true'
+        })
+
+        localStorage.setItem('token', '0')
+        window.location.reload()
+    }
+
+
+    var user_ref = database.ref('users'+ "/" + [value])
+    
+        user_ref.once("value", function(snapshot) {
+            var data = snapshot.val();
+
+
+
+
+            if(data.claimable =='true'){
+                //user pairing id was validated
+                var terms = document.createElement('div')
+terms.innerHTML='<h5 style="text-align:center;margin-top:75px"><span style="font-size:25px">Terms and Conditions</span><p/>Your account can be suspended at any time for no real reason<p/>You WILL loose access to this if you break the rules<p/>Refering people is allowed<p/>ANYTHING at all you do on this site is your responsibility. <p/>All your actions are your problem and your problem only.<p/>Use this at your own risk.</h5>'
+document.body.appendChild(terms)
+terms.style.backgroundColor='black'
+terms.style.height='100px'
+terms.style.width='100px'
+terms.style='  position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);background: rgba(255, 255, 255, 0.29);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(11.4px);-webkit-backdrop-filter: blur(11.4px);'
+
+terms.style.height='300px'
+terms.style.width='500px'
+terms.style.color='black'
+var termsContinue = document.createElement('button')
+
+
+
+setTimeout(() => {
+
+
+termsContinue.style='background: rgba(130, 198, 198, 0.27);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(6.2px);-webkit-backdrop-filter: blur(6.2px);border: 1px solid rgba(52, 241, 253, 0.15);margin-left:200'
+termsContinue.innerHTML='Continue'
+termsContinue.style.transition='1s'
+termsContinue.style.opacity='0'
+termsContinue.style.height='40px'
+termsContinue.style.width='100px'
+termsContinue.style.marginBottom='50px'
+terms.appendChild(termsContinue)
+setInterval(() => {
+    termsContinue.style.opacity='1'
+    termsContinue.style.marginTop='50px'
+    
+}, 100);
+}, 2000);
+
+termsContinue.onmouseover=function(){
+    termsContinue.style.height='80px'
+termsContinue.style.width='350px'
+termsContinue.style.marginRight='100px'
+    termsContinue.innerHTML='I agree that I have read over the terms <p/>and that I will be accountable for any and all<p/>actions I do on this site.'
+    
+}
+termsContinue.onmouseleave=function(){
+    termsContinue.style.height='40px'
+termsContinue.style.width='100px'
+termsContinue.style.marginRight='0px'
+    termsContinue.innerHTML='Continue'
+    
+}
+terms.id='terms'
+termsContinue.onclick=function(){
+
+                        localStorage.setItem('token', value)
+                        database.ref('users/' + [value]).update({
+                            'claimable' : 'false'
+                        })
+                        terms.style.transition='1s'
+                        terms.style.marginTop='-100px'
+                        terms.style.opacity='0'
+                        setTimeout(() => {
+                            terms.remove()
+                       }, 1000);
+                        
+                       var user_ref = database.ref('users'+ "/" + [localStorage.getItem('token')])
+        
+                       user_ref.once("value", function(snapshot) {
+                           var data = snapshot.val();
+                           if(data){
+                               //user verified
+                               //puzzle done
+           
+                               var embed = document.createElement('iframe')
+                               embed.style.border='none'
+                               embed.style.position='fixed'
+                               embed.style.height='100%'
+                               embed.style.width='100%'
+                               embed.style.bottom='0'
+                               embed.style.left='0'
+                               embed.style.zIndex='99'
+                               embed.id='embed'
+                               embed.src='https://web-production-e785.up.railway.app'
+                               document.getElementById('deleteWhenDone').style.display='none'
+                               document.body.appendChild(embed)
+                               document.getElementById('deleteLater').remove()
+                           }
+               
+               })
+                    
+                    }
+                        
+                
+            }
+
+
+
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     textvalue = document.getElementById("textbox").value;
     if (textvalue==code & counter==7){
-//puzzle done
 
-        var embed = document.createElement('iframe')
-        embed.style.border='none'
-        embed.style.position='fixed'
-        embed.style.height='100%'
-        embed.style.width='100%'
-        embed.style.bottom='0'
-        embed.style.left='0'
-        embed.style.zIndex='99'
-        embed.id='embed'
-        embed.src='https://web-production-e785.up.railway.app'
-        document.getElementById('deleteWhenDone').remove()
-        document.body.appendChild(embed)
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 var aboutbtn = document.getElementById("about");
