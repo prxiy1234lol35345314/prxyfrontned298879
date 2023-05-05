@@ -66,15 +66,7 @@ setInterval(() => {
                 
             }
             
-        }else if(hour=='12'){
-            if(minute>29){
-                document.getElementById('textbox').value='Not avaliable right now.'
-                document.getElementById('textbox').disabled=true;
-            if(document.getElementById('embed')){
-                document.getElementById('embed').remove()
-                
-            }
-            }
+        }
             
         }else if(hour=='15'){
             if(minute<16){
