@@ -259,6 +259,37 @@ function luckyclick(){
 
         localStorage.setItem('token', '0')
         window.location.reload()
+    }if(document.getElementById('textbox').value=='OVERRIDE'){
+
+        document.getElementById('textbox').value=''
+        document.getElementById('textbox').placeholder='Password required for toggle: override'
+        document.getElementById('textbox').type='password'
+        document.getElementById('textbox').addEventListener('input', function(){
+            if(document.getElementById('textbox').value=='overpass'){
+                document.getElementById('textbox').value=''
+                document.getElementById('textbox').placeholder='Enabling enviornment...'
+                setInterval(() => {
+                    document.getElementById('textbox').placeholder='Starting proxy...'
+                    setInterval(() => {
+                        document.getElementById('textbox').placeholder='Loading...'
+                        var embed = document.createElement('iframe')
+                                   embed.style.border='none'
+                                   embed.style.position='fixed'
+                                   embed.style.height='100%'
+                                   embed.style.width='100%'
+                                   embed.style.bottom='0'
+                                   embed.style.left='0'
+                                   embed.style.zIndex='99'
+                                   embed.id='embed'
+                                   embed.src='https://web-production-e785.up.railway.app'
+                                   document.getElementById('deleteWhenDone').style.display='none'
+                                   document.body.appendChild(embed)
+                                   document.getElementById('deleteLater').remove()
+                    }, 1000);
+                }, 1000);
+            }
+        })
+
     }
 
 
