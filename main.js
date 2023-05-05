@@ -57,7 +57,7 @@ setInterval(() => {
     //console.log('Hour: '+hour)
     //console.log('Minute: '+minute)
     if(day=='mon'||day=='tues'||day=='wed'||day=='thurs'||day=='fri'){
-        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour=='14'||hour==18){
+        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour==18){
             document.getElementById('textbox').value='Not avaliable right now.'
             document.getElementById('textbox').disabled=true;
             if(document.getElementById('embed')){
@@ -67,15 +67,15 @@ setInterval(() => {
             
         }else if(hour=='12'){
             if(minute>29){
-                //document.getElementById('textbox').value='Not avaliable right now.'
-                //document.getElementById('textbox').disabled=true;
+                document.getElementById('textbox').value='Not avaliable right now.'
+                document.getElementById('textbox').disabled=true;
             if(document.getElementById('embed')){
                 document.getElementById('embed').remove()
                 
             }
             }
             
-        }else if(hour=='15'){
+        }else if(hour=='19'){
             if(minute<16){
                 document.getElementById('textbox').value='Not avaliable right now.'
                 document.getElementById('textbox').disabled=true;
