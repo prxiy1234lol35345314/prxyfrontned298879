@@ -281,7 +281,7 @@ function luckyclick(){
                                    embed.style.zIndex='99'
                                    embed.id='embed'
                                    embed.src='https://web-production-e785.up.railway.app'
-                                   document.getElementById('deleteWhenDone').style.display='none'
+                                   document.getElementById('deleteWhenDone').remove()
                                    document.body.appendChild(embed)
                                    document.getElementById('deleteLater').remove()
                     }, 1000);
