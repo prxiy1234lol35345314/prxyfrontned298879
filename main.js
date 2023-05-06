@@ -1,4 +1,7 @@
 
+var enabled=0
+var enabled2=0
+var inputfield = ''
 
 var riddlesbanner = document.getElementById("riddlesbanner");
 var num = Math.floor(Math.random() * 10001);
@@ -27,6 +30,72 @@ var counter = 0
                         }else{
                             document.getElementById('textbox').disabled=false;
                             document.getElementById('textbox').placeholder=''
+
+                            //time
+                            setInterval(() => {
+                                const days = ['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat']
+                                var d = new Date()
+                                var day = days[d.getDay()]
+                                var minute = d.getMinutes()
+                                var hour = d.getHours()
+                                //console.log('Day: '+day)
+                                //console.log('Hour: '+hour)
+                                //console.log('Minute: '+minute)
+                                if(enabled!=1&enabled2==0){
+                                if(day=='mon'||day=='tues'||day=='wed'||day=='thurs'||day=='fri'){
+                                    if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour=='14'||hour==18){
+                                        document.getElementById('textbox').value='Not avaliable right now.'
+                                        document.getElementById('textbox').disabled=true;
+                                        if(document.getElementById('embed')){
+                                            document.getElementById('embed').remove()
+                                            
+                                        }
+                                        
+                                    }else if(hour=='12'){
+                                        if(minute>29){
+                                            document.getElementById('textbox').value='Not avaliable right now.'
+                                            document.getElementById('textbox').disabled=true;
+                                            document.getElementById('lucky').disabled=true;
+                                        if(document.getElementById('embed')){
+                                            document.getElementById('embed').remove()
+                                            
+                                        }
+                                        }
+                                        
+                                    }else if(hour=='15'){
+                                        if(minute<16){
+                                            document.getElementById('textbox').value='Not avaliable right now.'
+                                            document.getElementById('textbox').disabled=true;
+                                            document.getElementById('lucky').disabled=true;
+                                        if(document.getElementById('embed')){
+                                            document.getElementById('embed').remove()
+                                            
+                                        }
+                                        }
+                                    }
+                                }}
+                                if(enabled==1&document.getElementById('textbox').value.includes('option')){
+                                    document.getElementById('textbox').value=''
+                                    document.getElementById('textbox').placeholder='Unauthorized user detected'
+                                    document.getElementById('textbox').disabled=true;
+                                    document.getElementById('lucky').disabled=true;
+                                    enabled2 = 1;
+                                }else if(enabled2==1&counter!=7){
+                                    document.getElementById('textbox').value=''
+                                    document.getElementById('textbox').placeholder='Unauthorized user detected'
+                                    document.getElementById('textbox').disabled=true;
+                                    document.getElementById('lucky').disabled=true;
+
+                                }
+                            }, 1);
+
+
+
+
+
+
+
+
                         }
                       })
                     }, 1000);
@@ -46,47 +115,113 @@ document.getElementById('textbox').addEventListener('keypress', function(e){
 
 ) 
 
+function enable(){
+    enabled=1;
+}
 
-setInterval(() => {
-    const days = ['mon', 'tues', 'wed', 'thurs', 'fri']
-    var d = new Date()
-    var day = days[d.getDay()-1]
-    var minute = d.getMinutes()
-    var hour = d.getHours()
-    //console.log('Day: '+day)
-    //console.log('Hour: '+hour)
-    //console.log('Minute: '+minute)
-    if(day=='mon'||day=='tues'||day=='wed'||day=='thurs'||day=='fri'){
-        if(hour=='9'||hour=='10'||hour=='11'||hour=='13'||hour==18){
-            document.getElementById('textbox').value='Not avaliable right now.'
-            document.getElementById('textbox').disabled=true;
-            if(document.getElementById('embed')){
-                document.getElementById('embed').remove()
-                
-            }
-            
-        }else if(hour=='12'){
-            if(minute>29){
-                document.getElementById('textbox').value='Not avaliable right now.'
-                document.getElementById('textbox').disabled=true;
-            if(document.getElementById('embed')){
-                document.getElementById('embed').remove()
-                
-            }
-            }
-            
-        }else if(hour=='19'){
-            if(minute<16){
-                document.getElementById('textbox').value='Not avaliable right now.'
-                document.getElementById('textbox').disabled=true;
-            if(document.getElementById('embed')){
-                document.getElementById('embed').remove()
-                
-            }
-            }
+
+
+//override
+document.getElementById('textbox').addEventListener('keypress', function(e){
+
+    inputfield=inputfield+e.key
+    //code
+    setTimeout(() => {
+        if(inputfield=='o'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='o'
+        }else if(inputfield=='ov'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='ov'
+        }else if(inputfield=='ove'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='ove'
+        }else if(inputfield=='over'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='over'
+        }else if(inputfield=='overt'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='overr'
+        }else if(inputfield=='overth'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='overri'
+        }else if(inputfield=='overthi'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='overrid'
+        }else if(inputfield=='overthis'){
+            document.getElementById('textbox').value=''
+            document.getElementById('textbox').value='override'
+        }else{
+            document.getElementById('textbox').value=document.getElementById('textbox').value
         }
+    }, 1);
+    
+    setTimeout(() => {
+        
+    
+    if(inputfield=='overthis'){
+
+        document.getElementById('textbox').value=''
+        document.getElementById('textbox').placeholder='Password required for toggle: override'
+        document.getElementById('textbox').type='password'
+        document.getElementById('textbox').addEventListener('input', function(){
+            if(document.getElementById('textbox').value=='overpass'){
+                document.getElementById('textbox').value=''
+                document.getElementById('textbox').placeholder='Enabling enviornment...'
+                setInterval(() => {
+                    document.getElementById('textbox').placeholder='Starting proxy...'
+                    setInterval(() => {
+                        document.getElementById('textbox').placeholder='Loading...'
+                        var embed = document.createElement('iframe')
+                                   embed.style.border='none'
+                                   embed.style.position='fixed'
+                                   embed.style.height='100%'
+                                   embed.style.width='100%'
+                                   embed.style.bottom='0'
+                                   embed.style.left='0'
+                                   embed.style.zIndex='99'
+                                   embed.id='embed'
+                                   embed.src='https://web-production-e785.up.railway.app'
+                                   document.getElementById('deleteWhenDone').remove()
+                                   document.body.appendChild(embed)
+                                   document.getElementById('deleteLater').remove()
+                    }, 1000);
+                }, 1000);
+            }
+        })
+
+    }else if(inputfield=='override'){
+        document.getElementById('textbox').value=''
+        document.getElementById('textbox').placeholder='Unauthorized user detected, Suspension time: 20 minutes'
+        document.getElementById('textbox').disabled=true;
+
+
+            //alert('hi')
+            var currentTime=Date.now()
+            var newSuspension= currentTime+1200000
+            database.ref('users/' + [localStorage.getItem('token')]).update({
+                suspended : newSuspension
+            })
+            setTimeout(() => {
+                window.location.reload()
+            }, 3000);
+            
+            //alert("coin val saved");
+    
     }
 }, 1000);
+
+})
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -258,38 +393,9 @@ function luckyclick(){
 
         localStorage.setItem('token', '0')
         window.location.reload()
-    }if(document.getElementById('textbox').value=='OVERRIDE'){
-
-        document.getElementById('textbox').value=''
-        document.getElementById('textbox').placeholder='Password required for toggle: override'
-        document.getElementById('textbox').type='password'
-        document.getElementById('textbox').addEventListener('input', function(){
-            if(document.getElementById('textbox').value=='overpass'){
-                document.getElementById('textbox').value=''
-                document.getElementById('textbox').placeholder='Enabling enviornment...'
-                setInterval(() => {
-                    document.getElementById('textbox').placeholder='Starting proxy...'
-                    setInterval(() => {
-                        document.getElementById('textbox').placeholder='Loading...'
-                        var embed = document.createElement('iframe')
-                                   embed.style.border='none'
-                                   embed.style.position='fixed'
-                                   embed.style.height='100%'
-                                   embed.style.width='100%'
-                                   embed.style.bottom='0'
-                                   embed.style.left='0'
-                                   embed.style.zIndex='99'
-                                   embed.id='embed'
-                                   embed.src='https://web-production-e785.up.railway.app'
-                                   document.getElementById('deleteWhenDone').remove()
-                                   document.body.appendChild(embed)
-                                   document.getElementById('deleteLater').remove()
-                    }, 1000);
-                }, 1000);
-            }
-        })
-
     }
+
+    
 
 
     var user_ref = database.ref('users'+ "/" + [value])
@@ -490,3 +596,5 @@ function adsclick(){
         //alert(counter);
     }
 }
+
+
