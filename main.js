@@ -73,7 +73,7 @@ setTimeout(() => {
         //alert(data1+"    "+check)
     
         //alert('no')
-        document.getElementById('profileimg').remove()
+       // document.getElementById('profileimg').remove()
         var signinbtn = document.createElement('button')
         document.getElementById('profilecontainer').appendChild(signinbtn)
         signinbtn.style.backgroundColor='#8ab4f7'
