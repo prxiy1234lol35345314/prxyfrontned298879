@@ -2,11 +2,103 @@
 var enabled=0
 var enabled2=0
 var inputfield = ''
+var check = 0;
 
 var riddlesbanner = document.getElementById("riddlesbanner");
 var num = Math.floor(Math.random() * 10001);
 var code = "$options+new%#"+num
 var counter = 0
+
+setInterval(() => {
+    if(counter!=7||document.getElementById('textbox').value!=code){
+        document.getElementById('lucky').disabled=true;
+        document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
+        
+    }else{
+        document.getElementById('lucky').disabled=false;
+    }
+}, 0.1);
+
+
+    var user_ref = database.ref('number'+'')
+    user_ref.once("value", function(snapshot) {
+    var data1 = snapshot.val();
+     console.log(data1)
+     
+    for(let i=0; i<data1;i++){
+        //alert('hello world')
+        var user_ref = database.ref('id/' + i)
+        user_ref.once("value", function(snapshot) {
+        var data = snapshot.val();
+        console.log(data)
+        if(check==data1){
+            //alert(data1+"    "+check)
+        
+            //alert('no')
+            document.getElementById('profileimg').remove()
+            var signinbtn = document.createElement('button')
+            document.getElementById('profilecontainer').appendChild(signinbtn)
+            signinbtn.style.backgroundColor='#8ab4f7'
+            signinbtn.style.width='100px'
+            signinbtn.innerHTML='Sign in'
+            signinbtn.style.fontSize='15px'
+            signinbtn.style.fontWeight='500'
+            signinbtn.style.color='white'
+            signinbtn.id='profileimg'
+            document.getElementById('profilecontainer').style.width='100px'
+            
+            
+            }else{
+                //alert(data1+"    "+check)
+        
+                //alert('verified')
+            }
+            //alert(localStorage.getItem('token')==data)
+        if(localStorage.getItem('token')==data){
+            //id is verified
+
+            //alert(check)
+            check--;
+        }else{
+            check++;
+        }
+        
+    })
+
+}
+
+setTimeout(() => {
+    if(check==data1){
+        //alert(data1+"    "+check)
+    
+        //alert('no')
+        document.getElementById('profileimg').remove()
+        var signinbtn = document.createElement('button')
+        document.getElementById('profilecontainer').appendChild(signinbtn)
+        signinbtn.style.backgroundColor='#8ab4f7'
+        signinbtn.style.width='100px'
+        signinbtn.innerHTML='Sign in'
+        signinbtn.style.fontSize='15px'
+        signinbtn.style.fontWeight='500'
+        signinbtn.style.color='white'
+        signinbtn.id='profileimg'
+        document.getElementById('profilecontainer').style.width='100px'
+        
+        
+        }else{
+            //alert(data1+"    "+check)
+    
+            //alert('verified')
+            document.getElementById('profilecontainer').innerHTML='<img class="profile" onclick="profilepicclick();" src="img/profile.jpg" id="profileimg" alt="">'
+        }
+}, 1000);
+
+
+
+}
+
+)
 
 
 
@@ -25,7 +117,9 @@ var counter = 0
                             if(document.getElementById('embed')){
                                 document.getElementById('embed').remove()
                                 document.getElementById('deleteWhenDone').style.display='block'
-                                
+                                document.getElementById('lucky').disabled=true;
+                                document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                             }
                         }else{
                             document.getElementById('textbox').disabled=false;
@@ -54,7 +148,9 @@ var counter = 0
                                         document.getElementById('textbox').disabled=true;
                                         if(document.getElementById('embed')){
                                             document.getElementById('embed').remove()
-                                            
+                                            document.getElementById('lucky').disabled=true;
+                                            document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                         }
                                         
                                     }else if(hour=='12'){
@@ -62,9 +158,13 @@ var counter = 0
                                             document.getElementById('textbox').value='Not avaliable right now.'
                                             document.getElementById('textbox').disabled=true;
                                             document.getElementById('lucky').disabled=true;
+                                            document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                         if(document.getElementById('embed')){
                                             document.getElementById('embed').remove()
-                                            
+                                            document.getElementById('lucky').disabled=true;
+                                            document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                         }
                                         }
                                         
@@ -73,9 +173,13 @@ var counter = 0
                                             document.getElementById('textbox').value='Not avaliable right now.'
                                             document.getElementById('textbox').disabled=true;
                                             document.getElementById('lucky').disabled=true;
+                                            document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                         if(document.getElementById('embed')){
                                             document.getElementById('embed').remove()
-                                            
+                                            document.getElementById('lucky').disabled=true;
+                                            document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                         }
                                         }
                                     }
@@ -85,12 +189,16 @@ var counter = 0
                                     document.getElementById('textbox').placeholder='Unauthorized user detected'
                                     document.getElementById('textbox').disabled=true;
                                     document.getElementById('lucky').disabled=true;
+                                    document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                     enabled2 = 1;
                                 }else if(enabled2==1&counter!=7){
                                     document.getElementById('textbox').value=''
                                     document.getElementById('textbox').placeholder='Unauthorized user detected'
                                     document.getElementById('textbox').disabled=true;
                                     document.getElementById('lucky').disabled=true;
+                                    document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
 
                                 }
                             }, 1);
@@ -479,7 +587,7 @@ function luckyclick(){
 
 
 
-            if(data.claimable =='true'){
+            if(data.claimable =='true'&counter==7){
                 //user pairing id was validated
                 var terms = document.createElement('div')
 terms.innerHTML='<h5 style="text-align:center;margin-top:75px"><span style="font-size:25px">Terms and Conditions</span><p/>Your account can be suspended at any time for no real reason<p/>You WILL loose access to this if you break the rules<p/>Refering people is allowed<p/>ANYTHING at all you do on this site is your responsibility. <p/>All your actions are your problem and your problem only.<p/>Use this at your own risk.</h5>'
