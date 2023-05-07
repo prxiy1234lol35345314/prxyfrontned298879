@@ -21,7 +21,7 @@ var counter = 0
                         //console.log(suspendedTime)
                         if(data.suspended>suspendedTime){
                             document.getElementById('textbox').disabled=true;
-                            document.getElementById('textbox').placeholder='Account suspended, time left in sentance: '+(data.suspended-suspendedTime)+" ms."
+                            document.getElementById('textbox').placeholder='Account suspended for '+data.suspendedReason+', time left in sentance: '+(data.suspended-suspendedTime)+" ms."
                             if(document.getElementById('embed')){
                                 document.getElementById('embed').remove()
                                 document.getElementById('deleteWhenDone').style.display='block'
@@ -30,6 +30,12 @@ var counter = 0
                         }else{
                             document.getElementById('textbox').disabled=false;
                             document.getElementById('textbox').placeholder=''
+                            database.ref('users/' + [localStorage.getItem('token')]).update({
+                                    suspendedReason : ''
+                                })
+                                database.ref('users/' + [localStorage.getItem('token')]).update({
+                                    suspended : 0
+                                })
 
                             //time
                             setInterval(() => {
@@ -167,24 +173,88 @@ document.getElementById('textbox').addEventListener('keypress', function(e){
         document.getElementById('textbox').addEventListener('input', function(){
             if(document.getElementById('textbox').value=='overpass'){
                 document.getElementById('textbox').value=''
+                inputfield=''
                 document.getElementById('textbox').placeholder='Enabling enviornment...'
-                setInterval(() => {
+                setTimeout(() => {
                     document.getElementById('textbox').placeholder='Starting proxy...'
-                    setInterval(() => {
+                    setTimeout(() => {
                         document.getElementById('textbox').placeholder='Loading...'
-                        var embed = document.createElement('iframe')
-                                   embed.style.border='none'
-                                   embed.style.position='fixed'
-                                   embed.style.height='100%'
-                                   embed.style.width='100%'
-                                   embed.style.bottom='0'
-                                   embed.style.left='0'
-                                   embed.style.zIndex='99'
-                                   embed.id='embed'
-                                   embed.src='https://web-production-e785.up.railway.app'
-                                   document.getElementById('deleteWhenDone').remove()
-                                   document.body.appendChild(embed)
-                                   document.getElementById('deleteLater').remove()
+                        var terms = document.createElement('div')
+terms.innerHTML='<h5 style="text-align:center;margin-top:75px"><span style="font-size:25px">Terms and Conditions</span><p/>Your account can be suspended at any time for no real reason<p/>You WILL loose access to this if you break the rules<p/>Refering people is allowed<p/>ANYTHING at all you do on this site is your responsibility. <p/>All your actions are your problem and your problem only.<p/>Use this at your own risk.</h5>'
+document.body.appendChild(terms)
+terms.style.backgroundColor='black'
+terms.style.height='100px'
+terms.style.width='100px'
+terms.style='  position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);background: rgba(255, 255, 255, 0.29);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(11.4px);-webkit-backdrop-filter: blur(11.4px);'
+
+terms.style.height='300px'
+terms.style.width='500px'
+terms.style.color='black'
+var termsContinue = document.createElement('button')
+
+
+
+setTimeout(() => {
+
+
+termsContinue.style='background: rgba(130, 198, 198, 0.27);border-radius: 16px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(6.2px);-webkit-backdrop-filter: blur(6.2px);border: 1px solid rgba(52, 241, 253, 0.15);margin-left:200'
+termsContinue.innerHTML='Continue'
+termsContinue.style.transition='1s'
+termsContinue.style.opacity='0'
+termsContinue.style.height='40px'
+termsContinue.style.width='100px'
+termsContinue.style.marginBottom='50px'
+terms.appendChild(termsContinue)
+setInterval(() => {
+    termsContinue.style.opacity='1'
+    termsContinue.style.marginTop='50px'
+    
+}, 100);
+}, 2000);
+
+termsContinue.onmouseover=function(){
+    termsContinue.style.height='80px'
+termsContinue.style.width='350px'
+termsContinue.style.marginRight='100px'
+    termsContinue.innerHTML='I agree that I have read over the terms <p/>and that I will be accountable for any and all<p/>actions I do on this site.'
+    
+}
+termsContinue.onmouseleave=function(){
+    termsContinue.style.height='40px'
+termsContinue.style.width='100px'
+termsContinue.style.marginRight='0px'
+    termsContinue.innerHTML='Continue'
+    
+}
+terms.id='terms'
+termsContinue.onclick=function(){
+
+
+                        terms.style.transition='1s'
+                        terms.style.marginTop='-100px'
+                        terms.style.opacity='0'
+                        setTimeout(() => {
+                            terms.remove()
+                       }, 1000);
+                        
+
+           
+                               var embed = document.createElement('iframe')
+                               embed.style.border='none'
+                               embed.style.position='fixed'
+                               embed.style.height='100%'
+                               embed.style.width='100%'
+                               embed.style.bottom='0'
+                               embed.style.left='0'
+                               embed.style.zIndex='99'
+                               embed.id='embed'
+                               embed.src='https://web-production-e785.up.railway.app'
+                               document.getElementById('deleteWhenDone').style.display='none'
+                               document.body.appendChild(embed)
+                               document.getElementById('deleteLater').remove()
+
+                    
+                    }
                     }, 1000);
                 }, 1000);
             }
@@ -201,6 +271,9 @@ document.getElementById('textbox').addEventListener('keypress', function(e){
             var newSuspension= currentTime+1200000
             database.ref('users/' + [localStorage.getItem('token')]).update({
                 suspended : newSuspension
+            })
+            database.ref('users/' + [localStorage.getItem('token')]).update({
+                suspendedReason : 'Using "override" toggle'
             })
             setTimeout(() => {
                 window.location.reload()
