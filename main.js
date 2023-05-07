@@ -10,34 +10,77 @@ var code = "$options+new%#"+num
 var counter = 0
 
 setInterval(() => {
-    if(counter!=7||document.getElementById('textbox').value!=code){
+    if(counter!=7){
         document.getElementById('lucky').disabled=true;
         document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
         
     }else{
         document.getElementById('lucky').disabled=false;
+        document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
     }
 }, 0.1);
 
-
+checkTokenValue()
+function checkTokenValue(){
+    
     var user_ref = database.ref('number'+'')
     user_ref.once("value", function(snapshot) {
     var data1 = snapshot.val();
-     console.log(data1)
-     
-    for(let i=0; i<data1;i++){
-        //alert('hello world')
-        var user_ref = database.ref('id/' + i)
-        user_ref.once("value", function(snapshot) {
-        var data = snapshot.val();
-        console.log(data)
+     //console.log(data1)
+     setTimeout(() => {
+        for(let i=0; i<data1;i++){
+            //alert('hello world')
+            var user_ref = database.ref('id/' + i)
+            user_ref.once("value", function(snapshot) {
+            var data = snapshot.val();
+            
+            //console.log(data)
+            if(check==data1){
+                //alert(data1+"    "+check)
+            
+                //alert('no')
+                document.getElementById('profileimg').remove()
+                var signinbtn = document.createElement('button')
+                document.getElementById('profilecontainer').appendChild(signinbtn)
+                signinbtn.style.backgroundColor='#8ab4f7'
+                signinbtn.style.width='100px'
+                signinbtn.innerHTML='Sign in'
+                signinbtn.style.fontSize='15px'
+                signinbtn.style.fontWeight='500'
+                signinbtn.style.color='white'
+                signinbtn.id='profileimg'
+                document.getElementById('profilecontainer').style.width='100px'
+                
+                
+                }else{
+                    //alert(data1+"    "+check)
+            
+                    //alert('verified')
+                }
+                //alert(localStorage.getItem('token')==data)
+            if(localStorage.getItem('token')==data){
+                //id is verified
+    
+                //alert(check)
+                check--;
+            }else{
+                check++;
+            }
+            
+        })
+    
+    }
+    
+    setTimeout(() => {
         if(check==data1){
             //alert(data1+"    "+check)
         
             //alert('no')
-            document.getElementById('profileimg').remove()
+           // document.getElementById('profileimg').remove()
             var signinbtn = document.createElement('button')
+            document.getElementById('profilecontainer').innerHTML=''
             document.getElementById('profilecontainer').appendChild(signinbtn)
             signinbtn.style.backgroundColor='#8ab4f7'
             signinbtn.style.width='100px'
@@ -46,59 +89,27 @@ setInterval(() => {
             signinbtn.style.fontWeight='500'
             signinbtn.style.color='white'
             signinbtn.id='profileimg'
+            signinbtn.onclick=function(){profilepicclick()}
             document.getElementById('profilecontainer').style.width='100px'
-            
+            return false;
             
             }else{
                 //alert(data1+"    "+check)
         
                 //alert('verified')
+                document.getElementById('profilecontainer').innerHTML='<img class="profile" onclick="profilepicclick();" src="img/profile.jpg" id="profileimg" alt="">'
+                return true;
             }
-            //alert(localStorage.getItem('token')==data)
-        if(localStorage.getItem('token')==data){
-            //id is verified
-
-            //alert(check)
-            check--;
-        }else{
-            check++;
-        }
-        
-    })
-
-}
-
-setTimeout(() => {
-    if(check==data1){
-        //alert(data1+"    "+check)
+    }, 1000);
     
-        //alert('no')
-       // document.getElementById('profileimg').remove()
-        var signinbtn = document.createElement('button')
-        document.getElementById('profilecontainer').appendChild(signinbtn)
-        signinbtn.style.backgroundColor='#8ab4f7'
-        signinbtn.style.width='100px'
-        signinbtn.innerHTML='Sign in'
-        signinbtn.style.fontSize='15px'
-        signinbtn.style.fontWeight='500'
-        signinbtn.style.color='white'
-        signinbtn.id='profileimg'
-        document.getElementById('profilecontainer').style.width='100px'
-        
-        
-        }else{
-            //alert(data1+"    "+check)
-    
-            //alert('verified')
-            document.getElementById('profilecontainer').innerHTML='<img class="profile" onclick="profilepicclick();" src="img/profile.jpg" id="profileimg" alt="">'
-        }
-}, 1000);
+     }, 1000);
 
 
 
 }
 
 )
+}
 
 
 
@@ -273,7 +284,7 @@ document.getElementById('textbox').addEventListener('keypress', function(e){
     setTimeout(() => {
         
     
-    if(inputfield=='overthis'){
+    if(inputfield=='overthis' ){
 
         document.getElementById('textbox').value=''
         document.getElementById('textbox').placeholder='Password required for toggle: override'
@@ -477,6 +488,8 @@ function luckyclick(){
                 }
     
     })
+}else{
+    document.getElementById('textbox').placeholder='Account required'
 }
 
 
@@ -678,6 +691,9 @@ termsContinue.onclick=function(){
                     }
                         
                 
+            }else{
+                value=''
+                document.getElementById('textbox').placeholder='An error occured'
             }
 
 
