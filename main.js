@@ -9,17 +9,17 @@ var num = Math.floor(Math.random() * 10001);
 var code = "$options+new%#"+num
 var counter = 0
 
-setInterval(() => {
+var luckyInt = setInterval(() => {
     if(counter!=7){
         document.getElementById('lucky').disabled=true;
         document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
         
-    }else{
-        document.getElementById('lucky').disabled=false;
-        document.getElementById('lucky').style.color='black'
-        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
-    }
+    }//else{
+     //   document.getElementById('lucky').disabled=false;
+     //   document.getElementById('lucky').style.color='black'
+     //   document.getElementById('lucky').style.backgroundColor='#f8f9fa'
+    //}
 }, 0.1);
 
 checkTokenValue()
@@ -211,6 +211,11 @@ function checkTokenValue(){
                                     document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
 
+                                }else{
+                                luckyInt.removeInterval();
+                                    document.getElementById('lucky').disabled=false;
+        document.getElementById('lucky').style.color='black'
+ document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                 }
                             }, 1);
 
