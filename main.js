@@ -9,7 +9,7 @@ var num = Math.floor(Math.random() * 10001);
 var code = "$options+new%#"+num
 var counter = 0
 
-var luckyInt = setInterval(() => {
+setInterval(() => {
     if(counter!=7){
         document.getElementById('lucky').disabled=true;
         document.getElementById('lucky').style.color='black'
@@ -19,7 +19,7 @@ var luckyInt = setInterval(() => {
         document.getElementById('lucky').disabled=false;
         document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
-   /}
+    }
 }, 0.1);
 
 checkTokenValue()
@@ -93,6 +93,12 @@ function checkTokenValue(){
             document.getElementById('profilecontainer').style.width='100px'
             return false;
             
+            }else{
+                //alert(data1+"    "+check)
+        
+                //alert('verified')
+                document.getElementById('profilecontainer').innerHTML='<img class="profile" onclick="profilepicclick();" src="img/profile.jpg" id="profileimg" alt="">'
+                return true;
             }
     }, 1000);
     
@@ -205,11 +211,6 @@ function checkTokenValue(){
                                     document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
 
-                                }else{
-                                luckyInt.removeInterval();
-                                    document.getElementById('lucky').disabled=false;
-        document.getElementById('lucky').style.color='black'
- document.getElementById('lucky').style.backgroundColor='#f8f9fa'
                                 }
                             }, 1);
 
@@ -792,5 +793,4 @@ function adsclick(){
         //alert(counter);
     }
 }
-
 
