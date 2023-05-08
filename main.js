@@ -15,11 +15,11 @@ var luckyInt = setInterval(() => {
         document.getElementById('lucky').style.color='black'
         document.getElementById('lucky').style.backgroundColor='#f8f9fa'
         
-    }//else{
-     //   document.getElementById('lucky').disabled=false;
-     //   document.getElementById('lucky').style.color='black'
-     //   document.getElementById('lucky').style.backgroundColor='#f8f9fa'
-    //}
+    }else{
+        document.getElementById('lucky').disabled=false;
+        document.getElementById('lucky').style.color='black'
+        document.getElementById('lucky').style.backgroundColor='#f8f9fa'
+   /}
 }, 0.1);
 
 checkTokenValue()
@@ -93,12 +93,6 @@ function checkTokenValue(){
             document.getElementById('profilecontainer').style.width='100px'
             return false;
             
-            }else{
-                //alert(data1+"    "+check)
-        
-                //alert('verified')
-                document.getElementById('profilecontainer').innerHTML='<img class="profile" onclick="profilepicclick();" src="img/profile.jpg" id="profileimg" alt="">'
-                return true;
             }
     }, 1000);
     
